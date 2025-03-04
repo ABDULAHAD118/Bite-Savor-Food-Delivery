@@ -1,35 +1,36 @@
-import 'dotenv/config.js'
-import express from 'express'
-import cors from 'cors'
+import 'dotenv/config.js';
+import express from 'express';
+import cors from 'cors';
 import { connectDb } from './config/db.js';
 import foodRouter from './routes/food.js';
 
-//Express App
+// Express App
 const app = express();
 const port = 4000;
 const url = process.env.MONGO_URI;
-//Middlewares
+
+// Middlewares
 app.use(express.json());
 app.use(cors());
-app.use('/images', express.static('uploads'))
+app.use('/images', express.static('uploads'));
 
-    //db Connection
-    (async () => {
-        try {
-            await connectDb(url);
-            console.log('Database connected successfully');
-        } catch (error) {
-            console.error('Database connection error:', error);
-        }
-    })();
+// Database Connection
+(async () => {
+    try {
+        await connectDb(url);
+        console.log('Database connected successfully');
+    } catch (error) {
+        console.error('Database connection error:', error);
+    }
+})();
 
-//Routes
+// Routes
 app.use('/api/food', foodRouter);
 app.get('/', async (req, res) => {
-    return res.send("Api Working")
-})
+    res.send("API is Working");
+});
 
-//Server
+// Server
 app.listen(port, () => {
-    console.log(`Server is running on port http://localhost:${port}`)
-})
+    console.log(`Server is running on http://localhost:${port}`);
+});
