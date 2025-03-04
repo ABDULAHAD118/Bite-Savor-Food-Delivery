@@ -9,11 +9,19 @@ const app = express();
 const port = 4000;
 const url = process.env.MONGO_URI;
 //Middlewares
-app.use(express.json);
+app.use(express.json());
 app.use(cors());
+app.use('/images', express.static('uploads'))
 
-//db Connection
-await connectDb(url);
+    //db Connection
+    (async () => {
+        try {
+            await connectDb(url);
+            console.log('Database connected successfully');
+        } catch (error) {
+            console.error('Database connection error:', error);
+        }
+    })();
 
 //Routes
 app.use('/api/food', foodRouter);

@@ -2,9 +2,7 @@ import mongoose from "mongoose";
 
 
 const connectDb = async (url) => {
-    await mongoose.connect(url).then(() => {
-        console.log('Database connected')
-    })
+    await mongoose.connect(url);
 }
 
 export { connectDb }

@@ -24,4 +24,7 @@ build/
 Thumbs.db
 
 # Ignore npm package lock file
-package-lock.json
+package-lock.
+
+# Ignore uploads files
+uploads/ 
