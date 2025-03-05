@@ -4,6 +4,7 @@ import cors from 'cors'
 import { connectDb } from './config/db.js';
 import foodRouter from './routes/food.js';
 import UserRouter from './routes/user.js';
+import CartRouter from './routes/cart.js';
 
 //Express App
 const app = express();
@@ -27,6 +28,7 @@ try {
 //Routes
 app.use('/api/food', foodRouter);
 app.use('/api/user', UserRouter);
+app.use('/api/cart', CartRouter);
 app.get('/', async (req, res) => {
     res.send("Api Working")
 })
