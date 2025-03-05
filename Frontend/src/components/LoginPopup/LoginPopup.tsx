@@ -4,11 +4,12 @@ import { assets } from '../../assets/frontend_assets/assets'
 import { LoginPopupProps } from '../../Types'
 import { StoreContext } from '../../contexts/StoreContext'
 import axios from 'axios'
+import { toast } from 'react-toastify'
 
 
 const LoginPopup = (props: LoginPopupProps) => {
     const { setShowLogin } = props
-    const { URL } = useContext<any>(StoreContext)
+    const { URL, setToken } = useContext<any>(StoreContext)
     const [currentState, setCurrentState] = useState('Sign Up');
     const [data, setData] = useState({
         email: '',
@@ -34,13 +35,14 @@ const LoginPopup = (props: LoginPopupProps) => {
                 newURL = `${URL}/api/user/login`
             }
             let response = await axios.post(newURL, data)
-            console.log(response)
             if (response.data.success) {
                 localStorage.setItem('token', response.data.token)
+                setToken(response.data.token);
+                toast.success(response.data.message);
                 setShowLogin(false)
             }
             else {
-                alert(response.data.message)
+                toast.error(response.data.message)
             }
         } catch (error) {
             console.log(error)

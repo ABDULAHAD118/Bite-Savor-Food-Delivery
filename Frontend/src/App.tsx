@@ -6,6 +6,7 @@ import PlaceOrder from "./pages/Order/PlaceOrder"
 import Footer from "./components/Footer/Footer"
 import LoginPopup from "./components/LoginPopup/LoginPopup"
 import { useState } from "react"
+import { ToastContainer } from "react-toastify"
 
 function App() {
   const [showLogin, setShowLogin] = useState(false)
@@ -16,6 +17,7 @@ function App() {
         showLogin && <LoginPopup setShowLogin={setShowLogin} />
       }
       <div className="app">
+        <ToastContainer />
         <Navbar setShowLogin={setShowLogin} />
         <Routes>
           <Route path="/" element={<Home />} />

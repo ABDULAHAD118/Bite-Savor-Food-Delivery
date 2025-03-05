@@ -13,6 +13,15 @@ export interface StoreContextType {
   URL?: string;
 }
 
+export interface food_list {
+  _id: string;
+  name: string;
+  image: string;
+  price: number;
+  description: string;
+  category: string;
+}
+
 export interface NavbarProps {
   setShowLogin: (value: boolean) => void;
 }

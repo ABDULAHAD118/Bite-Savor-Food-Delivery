@@ -21,7 +21,7 @@ const loginUser = async (req, res) => {
             return res.status(400).json({ success: false, message: 'Invalid Password' });
         }
         const token = await createToken(user._id);
-        res.json({ success: true, token });
+        res.json({ success: true, token, message: 'Login Successful' });
     } catch (error) {
         console.error(error);
         res.status(500).json({ success: false, message: 'Server Error' });
