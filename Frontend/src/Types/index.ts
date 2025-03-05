@@ -10,6 +10,7 @@ export interface StoreContextType {
   cartItem?: { [key: string]: number };
   addToCart?: (id: string) => void;
   removeFromCart?: (id: string) => void;
+  URL?: string;
 }
 
 export interface NavbarProps {

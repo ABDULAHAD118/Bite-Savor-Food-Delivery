@@ -6,6 +6,7 @@ export const StoreContext = createContext<StoreContextType | null>(null);
 
 const StoreContextProvider = ({ children }: { children: ReactNode }) => {
     const [cartItem, setCartItem] = useState<{ [key: string]: number }>({});
+    const URL = 'http://localhost:4000';
 
     const addToCart = (itemId: any) => {
         if (!cartItem[itemId]) {
@@ -37,7 +38,8 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
         setCartItem,
         addToCart,
         removeFromCart,
-        getTotalCartAmount
+        getTotalCartAmount,
+        URL
     }
     return (
         <StoreContext.Provider value={contextValue}>
