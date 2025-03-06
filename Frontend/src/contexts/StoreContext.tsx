@@ -6,7 +6,7 @@ export const StoreContext = createContext<StoreContextType | null>(null);
 
 const StoreContextProvider = ({ children }: { children: ReactNode }) => {
     const [cartItem, setCartItem] = useState<{ [key: string]: number }>({});
-    const URL = 'http://localhost:4000';
+    const URL = import.meta.env.VITE_URL;
     const [token, setToken] = useState<string | null>(null);
     const [food_list, setFoodList] = useState<any>([]);
 
@@ -98,3 +98,4 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
 
 
 export default StoreContextProvider
+

@@ -37,3 +37,9 @@ export interface FoodItemProps {
   price: number;
   image: string;
 }
+
+export interface SpinnerProps {
+  width: number;
+  height: number;
+  borderWidth: number;
+}

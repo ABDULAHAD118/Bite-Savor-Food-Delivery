@@ -30,7 +30,6 @@ const Verify = () => {
     return (
         <div className='verify'>
             <Spinner />
-
         </div>
     )
 }

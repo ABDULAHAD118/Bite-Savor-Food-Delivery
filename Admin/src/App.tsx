@@ -7,7 +7,7 @@ import Add from "./pages/Add/Add"
 import { ToastContainer } from 'react-toastify';
 
 const App = () => {
-  const URL = 'http://localhost:4000';
+  const URL = import.meta.env.VITE_URL;
   return (
     <div>
       <ToastContainer />

@@ -5,9 +5,11 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 import { NavbarProps } from '../../Types';
+import Spinner from '../../components/Spinner/Spinner';
 
 const PlaceOrder = (props: NavbarProps) => {
     const { setShowLogin } = props;
+    const [pending, setPending] = useState(false);
     const { getTotalCartAmount, token, food_list, cartItem, URL } = useContext<any>(StoreContext);
     const navigate = useNavigate();
     const [data, setData] = useState({
@@ -28,6 +30,7 @@ const PlaceOrder = (props: NavbarProps) => {
 
     const placeOrder = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
+        setPending(true);
         let orderItems: any = [];
         food_list.map((item: any) => {
             if (cartItem[item._id] > 0) {
@@ -43,6 +46,7 @@ const PlaceOrder = (props: NavbarProps) => {
         }
         const response = await axios.post(URL + "/api/order/place", orderData, { headers: { token } });
         if (response.data.success) {
+            setPending(false);
             const { session_url } = response.data;
             window.location.replace(session_url);
         }
@@ -102,7 +106,7 @@ const PlaceOrder = (props: NavbarProps) => {
                             <p>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</p>
                         </div>
                     </div>
-                    <button type='submit'>Proceed to Payment</button>
+                    <button type='submit'>{pending ? <Spinner width={20} height={20} borderWidth={2} /> : 'Proceed to Payment'}</button>
                 </div>
             </div>
         </form>

@@ -1,8 +1,10 @@
+import { SpinnerProps } from '../../Types';
 import './Spinner.css'
 
-const Spinner = () => {
+const Spinner = (props: SpinnerProps) => {
+    const { width, height, borderWidth } = props;
     return (
-        <div className='spinner'></div>
+        <div className='spinner' style={{ width: width, height: height, borderWidth: borderWidth }}></div>
     )
 }
 
