@@ -5,14 +5,18 @@ import Cart from "./pages/Cart/Cart"
 import PlaceOrder from "./pages/Order/PlaceOrder"
 import Footer from "./components/Footer/Footer"
 import LoginPopup from "./components/LoginPopup/LoginPopup"
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { ToastContainer } from "react-toastify"
 import Verify from "./components/Verify/Verify"
 import MyOrders from "./pages/MyOrders/MyOrders"
 import NotFound from "./components/404/404"
+import { StoreContext } from "./contexts/StoreContext"
+import Spinner from "./components/Spinner/Spinner"
+import './App.css'
 
 function App() {
-  const [showLogin, setShowLogin] = useState(false)
+  const [showLogin, setShowLogin] = useState(false);
+  const { token, pending } = useContext<any>(StoreContext);
 
   return (
     <>
@@ -20,18 +24,20 @@ function App() {
         showLogin && <LoginPopup setShowLogin={setShowLogin} />
       }
       <div className="app">
-        <ToastContainer />
-        <Navbar setShowLogin={setShowLogin} />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/order" element={<PlaceOrder setShowLogin={setShowLogin} />} />
-          <Route path="/verify" element={<Verify />} />
-          <Route path="/myorders" element={<MyOrders />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        {pending ? <div className="spin"> <Spinner width={50} height={50} borderWidth={5} /></div> : <div>
+          <ToastContainer />
+          <Navbar setShowLogin={setShowLogin} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/order" element={<PlaceOrder setShowLogin={setShowLogin} />} />
+            {token && <Route path="/verify" element={<Verify />} />}
+            {token && <Route path="/myorders" element={<MyOrders />} />}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>}
       </div>
-      <Footer />
+      {!pending && <Footer />}
     </>
   )
 }

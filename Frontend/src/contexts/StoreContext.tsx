@@ -5,19 +5,23 @@ import axios from "axios";
 export const StoreContext = createContext<StoreContextType | null>(null);
 
 const StoreContextProvider = ({ children }: { children: ReactNode }) => {
-    const [cartItem, setCartItem] = useState<{ [key: string]: number }>({});
     const URL = import.meta.env.VITE_URL;
+    const [pending, setPending] = useState<boolean>(false);
+    const [cartItem, setCartItem] = useState<{ [key: string]: number }>({});
     const [token, setToken] = useState<string | null>(null);
     const [food_list, setFoodList] = useState<any>([]);
 
     const getFoodList = async () => {
         try {
+            setPending(true);
             let response = await axios.get(`${URL}/api/food/list`);
             if (response.data.success) {
+                setPending(false);
                 setFoodList(response.data.food);
             }
 
         } catch (error) {
+            setPending(false);
             console.log(error);
         }
     }
@@ -56,11 +60,14 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
 
     const loadCartData = async (token: string) => {
         try {
+            setPending(true);
             let response = await axios.get(URL + "/api/cart/get", { headers: { token } });
             if (response.data.success) {
+                setPending(false);
                 setCartItem(response.data.cartData);
             }
         } catch (error) {
+            setPending(false);
             console.log(error);
         }
     }
@@ -87,7 +94,9 @@ const StoreContextProvider = ({ children }: { children: ReactNode }) => {
         getTotalCartAmount,
         URL,
         token,
-        setToken
+        setToken,
+        pending,
+        setPending
     }
     return (
         <StoreContext.Provider value={contextValue}>
