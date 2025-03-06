@@ -54,12 +54,12 @@ const placeOrder = async (req, res) => {
 const verifyOrder = async (req, res) => {
     const { orderId, success } = req.body;
     try {
-        if (success) {
+        if (success == 'true') {
             await Order.findByIdAndUpdate(orderId, { payment: true });
             res.status(200).send({ success: true, message: 'Payment Successful!' });
         }
         else {
-            await Order.findByIdAndUpdate(orderId);
+            await Order.findByIdAndDelete(orderId);
             res.status(200).send({ success: false, message: 'Payment Failed!' });
         }
 
@@ -70,5 +70,16 @@ const verifyOrder = async (req, res) => {
 
 }
 
+const userOrders = async (req, res) => {
+    try {
+        const orders = await Order.find({ userId: req.body.userId });
+        res.status(200).send({ success: true, orders });
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        res.status(500).send({ success: false, message: 'Error fetching orders' });
+    }
 
-export { placeOrder, verifyOrder };
+}
+
+
+export { placeOrder, verifyOrder, userOrders };
