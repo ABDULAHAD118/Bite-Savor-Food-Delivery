@@ -9,6 +9,7 @@ import { useState } from "react"
 import { ToastContainer } from "react-toastify"
 import Verify from "./components/Verify/Verify"
 import MyOrders from "./pages/MyOrders/MyOrders"
+import NotFound from "./components/404/404"
 
 function App() {
   const [showLogin, setShowLogin] = useState(false)
@@ -27,7 +28,7 @@ function App() {
           <Route path="/order" element={<PlaceOrder setShowLogin={setShowLogin} />} />
           <Route path="/verify" element={<Verify />} />
           <Route path="/myorders" element={<MyOrders />} />
-          <Route path="*" element={<div>Not Found</div>} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
       <Footer />
