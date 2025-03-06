@@ -1,4 +1,4 @@
-import { assets } from '../../assets/frontend_assets/assets'
+import { assets } from '../../assets/assets'
 import './AppDownload.css'
 
 const AppDownload = () => {

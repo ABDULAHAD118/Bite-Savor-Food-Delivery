@@ -1,5 +1,5 @@
 import './Navbar.css'
-import { assets } from '../../assets/frontend_assets/assets'
+import { assets } from '../../assets/assets'
 import { useContext, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { NavbarProps } from '../../Types'
@@ -37,7 +37,7 @@ const Navbar = (props: NavbarProps) => {
                     <div className="navbar-profile">
                         <img src={assets.profile_icon} alt="" />
                         <ul className="navbar-profile-dropdown">
-                            <li>
+                            <li onClick={() => navigate('/myorders')}>
                                 <img src={assets.bag_icon} alt="" />
                                 <p>Orders</p>
                             </li>

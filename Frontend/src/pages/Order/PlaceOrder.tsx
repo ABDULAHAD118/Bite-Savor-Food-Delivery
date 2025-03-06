@@ -1,11 +1,15 @@
-import { ChangeEvent, FormEvent, useContext, useState } from 'react'
+import { ChangeEvent, FormEvent, useContext, useEffect, useState } from 'react'
 import './PlaceOrder.css'
 import { StoreContext } from '../../contexts/StoreContext'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
+import { NavbarProps } from '../../Types';
 
-const PlaceOrder = () => {
+const PlaceOrder = (props: NavbarProps) => {
+    const { setShowLogin } = props;
     const { getTotalCartAmount, token, food_list, cartItem, URL } = useContext<any>(StoreContext);
+    const navigate = useNavigate();
     const [data, setData] = useState({
         firstName: '',
         lastName: '',
@@ -47,6 +51,17 @@ const PlaceOrder = () => {
         }
 
     }
+
+    useEffect(() => {
+        if (!token) {
+            setShowLogin(true)
+            navigate('/cart')
+        }
+        else if (getTotalCartAmount() === 0) {
+            navigate('/cart')
+        }
+
+    }, [token])
     return (
         <form onSubmit={placeOrder} className='place-order'>
             <div className="place-order-left">

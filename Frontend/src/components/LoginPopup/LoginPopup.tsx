@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useContext, useState } from 'react'
 import './LoginPopup.css'
-import { assets } from '../../assets/frontend_assets/assets'
+import { assets } from '../../assets/assets'
 import { LoginPopupProps } from '../../Types'
 import { StoreContext } from '../../contexts/StoreContext'
 import axios from 'axios'

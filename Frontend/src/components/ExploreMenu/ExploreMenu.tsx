@@ -1,5 +1,5 @@
 import './ExploreMenu.css'
-import { menu_list } from '../../assets/frontend_assets/assets'
+import { menu_list } from '../../assets/assets'
 
 interface ExploreMenuProps {
     category: string;

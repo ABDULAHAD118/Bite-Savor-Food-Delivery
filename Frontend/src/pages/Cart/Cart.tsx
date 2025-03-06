@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import './Cart.css'
 import { StoreContext } from '../../contexts/StoreContext'
-import { assets } from '../../assets/frontend_assets/assets'
+import { assets } from '../../assets/assets'
 import { useNavigate } from 'react-router'
 
 const Cart = () => {
