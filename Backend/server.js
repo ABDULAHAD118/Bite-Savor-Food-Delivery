@@ -5,6 +5,7 @@ import { connectDb } from './config/db.js';
 import foodRouter from './routes/food.js';
 import UserRouter from './routes/user.js';
 import CartRouter from './routes/cart.js';
+import OrderRouter from './routes/order.js';
 
 //Express App
 const app = express();
@@ -29,6 +30,7 @@ try {
 app.use('/api/food', foodRouter);
 app.use('/api/user', UserRouter);
 app.use('/api/cart', CartRouter);
+app.use('/api/order', OrderRouter);
 app.get('/', async (req, res) => {
     res.send("Api Working")
 })
