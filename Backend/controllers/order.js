@@ -82,4 +82,26 @@ const userOrders = async (req, res) => {
 }
 
 
-export { placeOrder, verifyOrder, userOrders };
+const listOrder = async (req, res) => {
+    try {
+        const orders = await Order.find({});
+        res.status(200).send({ success: true, orders });
+    } catch (error) {
+        console.error('Error fetching orders:', error);
+        res.status(500).send({ success: false, message: 'Error fetching orders' });
+    }
+}
+
+const updateStatus = async (req, res) => {
+    try {
+        await Order.findByIdAndUpdate(req.body.orderId, { status: req.body.status })
+        res.status(200).send({ success: true, message: 'Order status updated!' });
+    } catch (error) {
+        console.error('Error updating order status:', error);
+        res.status(500).send({ success: false, message: 'Error updating order status' });
+    }
+
+}
+
+
+export { placeOrder, verifyOrder, userOrders, listOrder, updateStatus };
