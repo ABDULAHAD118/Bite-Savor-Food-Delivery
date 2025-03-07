@@ -14,7 +14,7 @@ const upload = multer({
     storage,
     limits: { fileSize: 2.5 * 1024 * 1024 },
     fileFilter: (req, file, cb) => {
-        const fileTypes = /jpeg|jpg/;
+        const fileTypes = /jpeg|jpg|png/;
         const extname = fileTypes.test(path.extname(file.originalname).toLowerCase());
         const mimetype = fileTypes.test(file.mimetype);
         if (extname && mimetype) {
@@ -34,6 +34,7 @@ export const uploadImageMiddleware = (req, res, next) => {
             return res.status(400).json({ error: err.message });
         }
 
+        console.log(req.body, req.file);
         if (!req.file) {
             return res.status(400).json({ error: 'No file uploaded' });
         }

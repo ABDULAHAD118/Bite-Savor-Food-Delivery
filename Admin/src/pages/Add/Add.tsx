@@ -29,22 +29,34 @@ const Add = (props: any) => {
         formData.append('category', data.category);
         formData.append('price', data.price);
         formData.append('image', image as Blob);
-        const response = await axios.post(`${url}/api/food/add`, formData);
-        if (response.data.success) {
-            setData({
-                name: '',
-                description: '',
-                category: 'Salad',
-                price: ''
-            });
-            setImage(null);
-            toast.success(response.data.message);
-        }
-        else {
-            toast.error('Failed to add product');
-            console.log(response.data.message);
+        for (const [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
         }
 
+        console.log(formData);
+        try {
+            const response = await axios.post(`${url}/api/food/add`, formData);
+            console.log(response);
+            if (response.data.success) {
+                setData({
+                    name: '',
+                    description: '',
+                    category: 'Salad',
+                    price: ''
+                });
+                setImage(null);
+                toast.success(response.data.message);
+            }
+            else {
+                toast.error('Failed to add product');
+                console.log(response.data.message);
+            }
+
+        } catch (error) {
+            console.log(error);
+
+
+        }
     }
 
     return (
