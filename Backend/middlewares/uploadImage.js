@@ -51,7 +51,7 @@ export const uploadImageMiddleware = (req, res, next) => {
             result.end(req.file.buffer);
         }
         catch (error) {
-            return res.status(500).json({ message: 'Failed to upload image', error });
+            return res.status(500).json({ message: 'Failed to upload image', error: error.message });
         }
     });
 };
