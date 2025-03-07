@@ -29,14 +29,8 @@ const Add = (props: any) => {
         formData.append('category', data.category);
         formData.append('price', data.price);
         formData.append('image', image as Blob);
-        for (const [key, value] of formData.entries()) {
-            console.log(`${key}:`, value);
-        }
-
-        console.log(formData);
         try {
             const response = await axios.post(`${url}/api/food/add`, formData);
-            console.log(response);
             if (response.data.success) {
                 setData({
                     name: '',
