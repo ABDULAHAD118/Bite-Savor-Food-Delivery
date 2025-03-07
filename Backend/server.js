@@ -9,7 +9,7 @@ import OrderRouter from './routes/order.js';
 
 //Express App
 const app = express();
-const port = 4000;
+const port = process.env.PORT ||4000;
 const url = process.env.MONGO_URI;
 
 //Middlewares
