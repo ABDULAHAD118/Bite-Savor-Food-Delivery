@@ -61,7 +61,7 @@ const List = (props: any) => {
                 </div>
                 {list.map((item: Food, index) => (
                     <div className="list-table-format" key={index}>
-                        <img src={`${url}/images/` + item.image} alt={item.name} />
+                        <img src={item.image} alt={item.name} />
                         <p>{item.name}</p>
                         <p>{item.category}</p>
                         <p>{item.price}</p>

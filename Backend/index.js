@@ -7,10 +7,13 @@ import UserRouter from './routes/user.js';
 import CartRouter from './routes/cart.js';
 import OrderRouter from './routes/order.js';
 
+
 //Express App
 const app = express();
-const port = process.env.PORT ||4000;
+const port = process.env.PORT || 4000;
 const url = process.env.MONGO_URI;
+
+
 
 //Middlewares
 app.use(express.json());

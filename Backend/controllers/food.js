@@ -6,12 +6,11 @@ import fs from "fs";
 //add food item
 const addFoodItem = async (req, res) => {
     try {
-        let image_filename = `${req.file.filename}`;
         const food = await foodModel.create({
             name: req.body.name,
             description: req.body.description,
             price: req.body.price,
-            image: image_filename,
+            image: req.imageURL,
             category: req.body.category
         })
         if (food) {
