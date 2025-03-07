@@ -25,6 +25,3 @@ Thumbs.db
 
 # Ignore npm package lock file
 package-lock.
-
-# Ignore uploads files
-uploads/ 
