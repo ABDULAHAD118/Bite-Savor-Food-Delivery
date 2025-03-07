@@ -6,7 +6,7 @@ import Spinner from '../Spinner/Spinner';
 import axios from 'axios';
 
 const Verify = () => {
-    const [searchParams, setSearchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const success = searchParams.get("success")
     const orderId = searchParams.get("orderId");
     const { URL } = useContext<any>(StoreContext);
@@ -29,7 +29,7 @@ const Verify = () => {
 
     return (
         <div className='verify'>
-            <Spinner />
+            <Spinner width={50} height={50} borderWidth={5} />
         </div>
     )
 }
