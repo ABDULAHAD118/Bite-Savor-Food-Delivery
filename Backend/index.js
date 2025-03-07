@@ -18,7 +18,6 @@ const url = process.env.MONGO_URI;
 //Middlewares
 app.use(express.json());
 app.use(cors());
-app.use('/images', express.static('uploads'))
 
 
 try {
