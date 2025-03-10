@@ -14,3 +14,12 @@
     gap: 30px;
     row-gap: 50px;
 }
+
+.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: grey;
+    min-height: 30vh;
+}

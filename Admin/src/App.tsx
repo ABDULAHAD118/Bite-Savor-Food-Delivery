@@ -4,13 +4,13 @@ import Sidebar from "./components/Sidebar/Sidebar"
 import List from "./pages/List/List"
 import Order from "./pages/Order/Order"
 import Add from "./pages/Add/Add"
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, Zoom } from 'react-toastify';
 
 const App = () => {
   const URL = import.meta.env.VITE_URL;
   return (
     <div>
-      <ToastContainer />
+      <ToastContainer autoClose={1500} transition={Zoom} pauseOnHover={false} draggable newestOnTop />
       <Navbar />
       <hr />
       <div className="app-content">

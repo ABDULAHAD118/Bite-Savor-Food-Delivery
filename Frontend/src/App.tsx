@@ -6,7 +6,7 @@ import PlaceOrder from "./pages/Order/PlaceOrder"
 import Footer from "./components/Footer/Footer"
 import LoginPopup from "./components/LoginPopup/LoginPopup"
 import { useContext, useState } from "react"
-import { ToastContainer } from "react-toastify"
+import { ToastContainer, Zoom } from "react-toastify"
 import Verify from "./components/Verify/Verify"
 import MyOrders from "./pages/MyOrders/MyOrders"
 import NotFound from "./components/404/404"
@@ -25,7 +25,7 @@ function App() {
       }
       <div className="app">
         {pending ? <div className="spin"> <Spinner width={50} height={50} borderWidth={5} /></div> : <div>
-          <ToastContainer />
+          <ToastContainer autoClose={1500} transition={Zoom} pauseOnHover={false} draggable newestOnTop />
           <Navbar setShowLogin={setShowLogin} />
           <Routes>
             <Route path="/" element={<Home />} />

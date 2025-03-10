@@ -29,12 +29,12 @@ export const uploadImageMiddleware = (req, res, next) => {
     upload(req, res, async (err) => {
         if (err) {
             if (err instanceof multer.MulterError && err.code === 'LIMIT_FILE_SIZE') {
-                return res.status(400).json({ error: 'File size exceeds 2.5 MB' });
+                return res.status(400).json({ message: 'File size exceeds 2.5 MB' });
             }
-            return res.status(400).json({ error: err.message });
+            return res.status(400).json({ message: err.message });
         }
         if (!req.file) {
-            return res.status(400).json({ error: 'No file uploaded' });
+            return res.status(400).json({ message: 'No file uploaded' });
         }
 
         try {
@@ -42,7 +42,7 @@ export const uploadImageMiddleware = (req, res, next) => {
                 { folder: '/images' },
                 (error, result) => {
                     if (error) {
-                        return res.status(500).json({ error: 'Cloudinary upload failed' });
+                        return res.status(500).json({ message: 'Cloudinary upload failed' });
                     }
                     req.imageURL = result?.url;
                     next();

@@ -3,48 +3,56 @@ import './Order.css'
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { assets } from '../../assets/assets';
+import Spinner from '../../components/Spinner/Spinner';
+
+interface Order {
+    _id: string;
+    items: {
+        name: string;
+        quantity: number;
+    }[];
+    address: {
+        firstName: string;
+        lastName: string;
+        street: string;
+        city: string;
+        state: string;
+        country: string;
+        zipcode: string;
+        phone: string;
+    };
+    amount: number;
+    status: string;
+    createdAt: string;
+}
 
 const Order = (props: any) => {
     const { url } = props;
-    interface Order {
-        _id: string;
-        items: {
-            name: string;
-            quantity: number;
-        }[];
-        address: {
-            firstName: string;
-            lastName: string;
-            street: string;
-            city: string;
-            state: string;
-            country: string;
-            zipcode: string;
-            phone: string;
-        };
-        amount: number;
-        status: string;
-    }
-
+    const [pending, setPending] = useState(false);
     const [orders, setOrders] = useState<Order[]>([]);
 
     const fetchAllOrders = async () => {
-        const response = await axios.get(`${url}/api/order/list`);
-        if (response.data.success) {
-            setOrders(response.data.orders);
-        }
-        else {
-            toast.error(response.data.message);
+        try {
+            setPending(true);
+            const response = await axios.get(`${url}/api/order/list`);
+            if (response.data.success) {
+                setPending(false);
+                response.data.orders.sort((a: Order, b: Order) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                setOrders(response.data.orders);
+            }
+        } catch (err: any) {
+            toast.error(err.response.data.message);
         }
     }
     const statusHandler = async (event: ChangeEvent<HTMLSelectElement>, orderId: string) => {
-        const response = await axios.post(`${url}/api/order/status`, { orderId: orderId, status: event.target.value })
-        if (response.data.success) {
-            toast.success(response.data.message);
-            await fetchAllOrders();
-        }
-        else {
-            toast.error(response.data.message);
+        try {
+            const response = await axios.post(`${url}/api/order/status`, { orderId: orderId, status: event.target.value })
+            if (response.data.success) {
+                await fetchAllOrders();
+                toast.success(response.data.message);
+            }
+        } catch (error: any) {
+            toast.error(error.response.data.message);
         }
 
     }
@@ -52,11 +60,17 @@ const Order = (props: any) => {
     useEffect(() => {
         fetchAllOrders();
     }, []);
+
+    if (pending) {
+        return <div className='spin'>
+            <Spinner width={50} height={50} borderWidth={5} />
+        </div>
+    }
     return (
         <div className='order add'>
             <h3>Order Page</h3>
             <div className="order-list">
-                {
+                {orders.length === 0 ? <div className='empty'>No Orders</div> :
                     orders.map((order, index) => {
                         return (
                             <div key={index} className='order-item'>
@@ -83,10 +97,10 @@ const Order = (props: any) => {
                                 </div>
                                 <p>Items:{order.items.length}</p>
                                 <p>${order.amount}</p>
-                                <select onChange={(event) => statusHandler(event, order._id)} value={order.status}>
-                                    <option value="Food Processing">Food Processing</option>
-                                    <option value="Out For Delivery">Out For Delivery</option>
-                                    <option value="Delivered">Delivered</option>
+                                <select className='cursor' onChange={(event) => statusHandler(event, order._id)} value={order.status}>
+                                    <option className='cursor' value="Food Processing">Food Processing</option>
+                                    <option className='cursor' value="Out For Delivery">Out For Delivery</option>
+                                    <option className='cursor' value="Delivered">Delivered</option>
                                 </select>
                             </div>
                         )

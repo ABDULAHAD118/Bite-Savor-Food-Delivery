@@ -3,10 +3,12 @@ import { assets } from '../../assets/assets'
 import './Add.css'
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Spinner from '../../components/Spinner/Spinner';
 
 const Add = (props: any) => {
     const { url } = props;
     const [image, setImage] = useState<File | null>(null);
+    const [pending, setPending] = useState(false);
     const [data, setData] = useState({
         name: '',
         description: '',
@@ -23,6 +25,15 @@ const Add = (props: any) => {
 
     const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+
+        if (!image) {
+            toast.error('Please upload image');
+            return;
+        }
+        if (!data.name || !data.description || !data.price) {
+            toast.error('Please fill all fields');
+            return;
+        }
         const formData = new FormData();
         formData.append('name', data.name);
         formData.append('description', data.description);
@@ -30,8 +41,10 @@ const Add = (props: any) => {
         formData.append('price', data.price);
         formData.append('image', image as Blob);
         try {
+            setPending(true);
             const response = await axios.post(`${url}/api/food/add`, formData);
             if (response.data.success) {
+                setPending(false);
                 setData({
                     name: '',
                     description: '',
@@ -41,15 +54,10 @@ const Add = (props: any) => {
                 setImage(null);
                 toast.success(response.data.message);
             }
-            else {
-                toast.error('Failed to add product');
-                console.log(response.data.message);
-            }
-
-        } catch (error) {
+        } catch (error: any) {
             console.log(error);
-
-
+            setPending(false);
+            toast.error(error.response.data.message);
         }
     }
 
@@ -58,14 +66,14 @@ const Add = (props: any) => {
             <form className='flex-col' onSubmit={onSubmitHandler}>
                 <div className="add-image-upload flex-col">
                     <p>Upload Image</p>
-                    <label htmlFor="image">
+                    <label htmlFor="image" className='cursor'>
                         <img src={image ? URL.createObjectURL(image) : assets.upload_area} alt="" />
                     </label>
-                    <input type="file" id='image' onChange={(e) => {
+                    <input type="file" id='image' name='image' onChange={(e) => {
                         if (e.target.files && e.target.files[0]) {
                             setImage(e.target.files[0]);
                         }
-                    }} hidden required />
+                    }} hidden />
                 </div>
                 <div className="add-product-name flex-col">
                     <p>Product Name</p>
@@ -94,7 +102,7 @@ const Add = (props: any) => {
                         <input onChange={onChangeHandler} value={data.price} type="number" name='price' placeholder='$20' />
                     </div>
                 </div>
-                <button className="add-button" type='submit' >Add Product</button>
+                <button className="add-button" type='submit' >{pending ? <Spinner width={20} height={20} borderWidth={2} /> : "Add Product"}</button>
             </form>
         </div>
     )

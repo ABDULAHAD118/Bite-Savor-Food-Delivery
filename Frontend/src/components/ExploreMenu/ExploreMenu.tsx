@@ -1,10 +1,8 @@
 import './ExploreMenu.css'
 import { menu_list } from '../../assets/assets'
+import { ExploreMenuProps } from '../../Types';
 
-interface ExploreMenuProps {
-    category: string;
-    setCategory: (category: string) => void;
-}
+
 const ExploreMenu = (props: ExploreMenuProps) => {
     const { category, setCategory } = props;
     return (

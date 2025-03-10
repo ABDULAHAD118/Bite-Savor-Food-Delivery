@@ -37,7 +37,7 @@ const registerUser = async (req, res) => {
         return res.status(400).json({ success: false, message: 'Invalid email' });
     }
     if (password.length < 8) {
-        return res.status(400).json({ success: false, message: 'Password must be at least 6 characters' });
+        return res.status(400).json({ success: false, message: 'Password must be at least 8 characters' });
     }
     try {
         const user = await User.findOne({ email });

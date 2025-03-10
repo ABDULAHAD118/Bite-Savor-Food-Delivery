@@ -42,6 +42,15 @@
     cursor: pointer;
 }
 
+.empty {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    color: grey;
+    min-height: 30vh;
+}
+
 @media (max-width: 900px) {
     .my-orders-order {
         grid-template-columns: 1fr 2fr 1fr;

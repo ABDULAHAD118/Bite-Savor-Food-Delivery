@@ -5,12 +5,14 @@ import { LoginPopupProps } from '../../Types'
 import { StoreContext } from '../../contexts/StoreContext'
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import Spinner from '../Spinner/Spinner'
 
 
 const LoginPopup = (props: LoginPopupProps) => {
     const { setShowLogin } = props
     const { URL, setToken } = useContext<any>(StoreContext);
-    const [currentState, setCurrentState] = useState('Sign Up');
+    const [currentState, setCurrentState] = useState('Login');
+    const [pending, setPending] = useState(false);
     const [data, setData] = useState({
         email: '',
         password: '',
@@ -26,6 +28,20 @@ const LoginPopup = (props: LoginPopupProps) => {
 
     const onLogin = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        if (currentState === 'Sign Up') {
+            if (!data.name.trim() || !data.password.trim()) {
+                toast.error('Please fill all fields');
+                return;
+            }
+        }
+        else {
+            if (!data.password.trim()) {
+                toast.error('Please fill all fields');
+                return;
+            }
+        }
+
         try {
             let newURL = URL;
             if (currentState === 'Sign Up') {
@@ -34,20 +50,19 @@ const LoginPopup = (props: LoginPopupProps) => {
             else {
                 newURL = `${URL}/api/user/login`
             }
+            setPending(true);
             let response = await axios.post(newURL, data)
             if (response.data.success) {
+                setPending(false);
                 localStorage.setItem('token', response.data.token)
                 setToken(response.data.token);
                 toast.success(response.data.message);
                 setShowLogin(false)
             }
-            else {
-                toast.error(response.data.message)
-            }
-        } catch (error) {
-            console.log(error)
+        } catch (error: any) {
+            setPending(false);
+            toast.error(error.response.data.message)
         }
-
     }
 
     return (
@@ -63,10 +78,12 @@ const LoginPopup = (props: LoginPopupProps) => {
                     <input type="password" placeholder='Password' name='password' onChange={handleChange} value={data.password} title='Password' required />
                 </div>
                 <div className="login-popup-conditions">
-                    <input type="checkbox" name="" required id="" />
-                    <p>By continuing,I agree to the terms of use & privacy policy.</p>
+                    <input type="checkbox" name="" required className='terms' id="terms" />
+                    <label htmlFor='terms' className='terms'>By continuing,I agree to the terms of use & privacy policy.</label>
                 </div>
-                <button type='submit' >{currentState === 'Sign Up' ? 'Create an account' : "Login"}</button>
+                <button type='submit' disabled={pending}>
+                    {pending ? <Spinner width={20} height={20} borderWidth={2} /> : (currentState === 'Sign Up' ? 'Create an account' : "Login")}
+                </button>
                 {currentState === 'Sign Up' ? <p>Already Have an Account?<span onClick={() => setCurrentState('Login')}>Login Here</span></p> : <p>Create a New Account?<span onClick={() => setCurrentState('Sign Up')}>Click Here</span></p>}
             </form>
         </div>

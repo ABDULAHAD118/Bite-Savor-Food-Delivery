@@ -43,3 +43,8 @@ export interface SpinnerProps {
   height: number;
   borderWidth: number;
 }
+
+export interface ExploreMenuProps {
+  category: string;
+  setCategory: (category: string) => void;
+}
