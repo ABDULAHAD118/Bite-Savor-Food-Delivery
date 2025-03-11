@@ -35,6 +35,10 @@
     transition: 0.3s;
 }
 
+.cursor {
+    cursor: pointer;
+}
+
 .navbar button:hover {
     background: tomato;
     color: white;

@@ -44,14 +44,17 @@ const PlaceOrder = (props: NavbarProps) => {
             address: data,
             amount: getTotalCartAmount() + 2
         }
-        const response = await axios.post(URL + "/api/order/place", orderData, { headers: { token } });
-        if (response.data.success) {
+        try {
+            const response = await axios.post(URL + "/api/order/place", orderData, { headers: { token } });
+            if (response.data.success) {
+                setPending(false);
+                const { session_url } = response.data;
+                window.location.replace(session_url);
+                toast.success(response.data.message)
+            }
+        } catch (error: any) {
             setPending(false);
-            const { session_url } = response.data;
-            window.location.replace(session_url);
-        }
-        else {
-            toast.error(response.data.message);
+            toast.error(error.response.data.message);
         }
 
     }
@@ -92,18 +95,18 @@ const PlaceOrder = (props: NavbarProps) => {
                     <div>
                         <div className="cart-total-details">
                             <p>Subtotal</p>
-                            <p>${getTotalCartAmount()}</p>
+                            <p>Rs.{getTotalCartAmount()}</p>
                         </div>
                         <hr />
 
                         <div className="cart-total-details">
                             <p>Delivery Fee</p>
-                            <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
+                            <p>Rs.{getTotalCartAmount() === 0 ? 0 : 250}</p>
                         </div>
                         <hr />
                         <div className="cart-total-details">
                             <p>Total</p>
-                            <p>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</p>
+                            <p>Rs.{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 250}</p>
                         </div>
                     </div>
                     <button type='submit'>{pending ? <Spinner width={20} height={20} borderWidth={2} /> : 'Proceed to Payment'}</button>

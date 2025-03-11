@@ -99,7 +99,7 @@ const Add = (props: any) => {
                     </div>
                     <div className="add-price flex-col">
                         <p>Product Price</p>
-                        <input onChange={onChangeHandler} value={data.price} type="number" name='price' placeholder='$20' />
+                        <input onChange={onChangeHandler} value={data.price} type="number" name='price' placeholder='Rs.200' />
                     </div>
                 </div>
                 <button className="add-button" type='submit' >{pending ? <Spinner width={20} height={20} borderWidth={2} /> : "Add Product"}</button>

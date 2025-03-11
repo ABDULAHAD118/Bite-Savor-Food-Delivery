@@ -10,6 +10,10 @@
     margin-top: 100px;
 }
 
+.logo {
+    width: 150px;
+}
+
 .footer-content {
     display: grid;
     width: 100%;
@@ -26,11 +30,11 @@
     gap: 20px;
 }
 
-.footer-content-left li,
 .footer-content-center li,
 .footer-content-right li {
     list-style: none;
     margin-bottom: 10px;
+    cursor: pointer;
 }
 
 .footer-content-center h2,
@@ -41,6 +45,7 @@
 .footer-social-icons img {
     width: 40px;
     margin-right: 15px;
+    cursor: pointer;
 }
 
 .footer hr {

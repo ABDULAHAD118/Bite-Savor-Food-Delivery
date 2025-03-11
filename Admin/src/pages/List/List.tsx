@@ -57,7 +57,7 @@ const List = (props: any) => {
 
     return (
         <div className='list add flex-col'>
-            <p>All Food List</p>
+            <h3>All Food List</h3>
             <div className="list-table">
                 <div className="list-table-format title">
                     <b>Image</b>
@@ -72,7 +72,7 @@ const List = (props: any) => {
                         <img src={item.image} alt={item.name} />
                         <p>{item.name}</p>
                         <p>{item.category}</p>
-                        <p>{item.price}</p>
+                        <p>Rs.{item.price}</p>
                         <p className='cursor' onClick={() => removeItem(item._id)}>X</p>
 
                     </div>

@@ -30,9 +30,9 @@ const Cart = () => {
                                     <div key={index} className="cart-items-title cart-items-item">
                                         <img src={food.image} alt="" />
                                         <p>{food.name}</p>
-                                        <p>${food.price}</p>
+                                        <p>Rs.{food.price}</p>
                                         <p>{cartItem[food._id]}</p>
-                                        <p>${food.price * cartItem[food._id]}</p>
+                                        <p>Rs.{food.price * cartItem[food._id]}</p>
                                         <p onClick={() => removeFromCart(food._id)} className='cross'><img src={assets.cross_icon} alt="" /></p>
                                     </div>
                                     <hr />
@@ -47,18 +47,18 @@ const Cart = () => {
                             <div>
                                 <div className="cart-total-details">
                                     <p>Subtotal</p>
-                                    <p>${getTotalCartAmount()}</p>
+                                    <p>Rs.{getTotalCartAmount()}</p>
                                 </div>
                                 <hr />
 
                                 <div className="cart-total-details">
                                     <p>Delivery Fee</p>
-                                    <p>${getTotalCartAmount() === 0 ? 0 : 2}</p>
+                                    <p>Rs.{getTotalCartAmount() === 0 ? 0 : 250}</p>
                                 </div>
                                 <hr />
                                 <div className="cart-total-details">
                                     <p>Total</p>
-                                    <p>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 2}</p>
+                                    <p>Rs.{getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 250}</p>
                                 </div>
                             </div>
                             <button onClick={() => navigate('/order')}>Proceed to Checkout</button>

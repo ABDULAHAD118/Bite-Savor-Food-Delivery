@@ -19,7 +19,8 @@ const Navbar = (props: NavbarProps) => {
 
     return (
         <div className="navbar">
-            <Link to='/'><div className="logo">Bite Savor</div></Link>
+            <Link to='/'>
+                <img src={assets.logo} alt={assets.logo} className="logo" /></Link>
             <ul className="navbar-menu">
                 <Link to='/' onClick={() => setMenu("home")} className={menu === "home" ? "active" : ''}>Home</Link>
                 <a href='#explore-menu' onClick={() => setMenu("menu")} className={menu === 'menu' ? 'active' : ''}>Menu</a>
@@ -27,7 +28,7 @@ const Navbar = (props: NavbarProps) => {
                 <a href='#footer' onClick={() => setMenu("contact-us")} className={menu === "contact-us" ? "active" : ''}>Contact Us</a>
             </ul >
             <div className="navbar-right">
-                <img src={assets.search_icon} alt="Search Icon" />
+                <img src={assets.search_icon} className='cursor' alt="Search Icon" />
                 <div className="navbar-search-icon">
                     <Link to="/cart"><img src={assets.basket_icon} alt="" /></Link>
 

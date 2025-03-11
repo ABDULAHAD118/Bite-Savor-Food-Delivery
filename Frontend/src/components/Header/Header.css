@@ -30,7 +30,7 @@
     font-size: 1vw;
 }
 
-.header-contents button {
+.header-contents .btn {
     background-color: #ff8800;
     color: rgb(255, 255, 255);
     font-size: 1vw;

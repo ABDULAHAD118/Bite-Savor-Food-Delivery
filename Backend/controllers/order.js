@@ -17,7 +17,7 @@ const placeOrder = async (req, res) => {
         });
         const line_items = req.body.items.map(item => ({
             price_data: {
-                currency: 'usd',
+                currency: 'pkr',
                 product_data: {
                     name: item.name,
                 },
@@ -27,27 +27,26 @@ const placeOrder = async (req, res) => {
         }));
         line_items.push({
             price_data: {
-                currency: 'usd',
+                currency: 'pkr',
                 product_data: {
                     name: 'Delivery Charges',
                 },
-                unit_amount: 2 * 100,
+                unit_amount: 250 * 100, // Convert USD to PKR
             },
             quantity: 1,
         });
         const session = await stripe.checkout.sessions.create({
-            // payment_method_types: ['card'],
+            payment_method_types: ['card'],
             line_items,
             mode: 'payment',
             success_url: `${process.env.CLIENT_URL}/verify?success=true&orderId=${newOrder._id}`,
             cancel_url: `${process.env.CLIENT_URL}/verify?success=false&orderId=${newOrder._id}`,
         });
-
         res.status(200).send({ success: true, session_url: session.url });
 
     } catch (error) {
         console.error('Error placing order:', error);
-        res.status(500).send({ success: false, message: 'Error placing order' });
+        res.status(500).send({ success: false, message: 'Error placing order', error });
     }
 }
 

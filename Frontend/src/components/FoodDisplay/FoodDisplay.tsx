@@ -15,7 +15,7 @@ const FoodDisplay = (props: any) => {
             {pending ? (
                 <Spinner width={50} height={50} borderWidth={5} />
             ) : food_list.length === 0 ? (
-                <h3>No food items found</h3>
+                <div className='empty'>No food items found</div>
             ) : (
                 (() => {
                     const filteredFood = food_list.filter((food: { category: string }) => category === 'All' || food.category === category);
