@@ -48,7 +48,7 @@ const Add = (props: any) => {
                 setData({
                     name: '',
                     description: '',
-                    category: 'Salad',
+                    category: data.category,
                     price: ''
                 });
                 setImage(null);
@@ -86,7 +86,7 @@ const Add = (props: any) => {
                 <div className="add-category-price">
                     <div className="add-category flex-col">
                         <p>Product Category</p>
-                        <select onChange={onChangeHandler} name="category" id="category">
+                        <select onChange={onChangeHandler} name="category" id="category" value={data.category}>
                             <option value="Salad">Salad</option>
                             <option value="Rolls">Rolls</option>
                             <option value="Deserts">Deserts</option>
